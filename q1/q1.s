@@ -7,11 +7,11 @@
 .globl get
 .globl getAtMost
 
-# -----------------------------------
+
 # struct Node* make_node(int val)
 # a0 = val
 # returns pointer in a0
-# -----------------------------------
+
 
 make_node:
     addi sp, sp, -16
@@ -35,10 +35,10 @@ make_node:
     addi sp, sp, 16
     ret
 
-# -----------------------------------
+
 # struct Node* insert(Node* root, int val)
 # a0 = root, a1 = val
-# -----------------------------------
+
 
 insert:
     addi sp, sp, -32
@@ -95,10 +95,10 @@ insert_end:
     ld ra, 24(sp)
     addi sp, sp, 32
     ret
-# -----------------------------------
+
 # struct Node* get(Node* root, int val)
 # a0 = root, a1 = val
-# -----------------------------------
+
 
 get:
     addi sp, sp, -16
@@ -134,11 +134,11 @@ get_end:
     addi sp, sp, 16
     ret
 
-# -----------------------------------
+
 # int getAtMost(int val, Node* root)
 # a0 = val, a1 = root
 # returns int in a0
-# -----------------------------------
+
 
 getAtMost:
     addi sp, sp, -16
