@@ -7,33 +7,69 @@ struct Node {
     struct Node* right;
 };
 
-// struct Node* make_node(int val);
+struct Node* make_node(int val);
+struct Node* insert(struct Node*, int);
+struct Node* get(struct Node*, int);
+int getAtMost(int, struct Node*);
 
-// int main() {
-//     struct Node* node = make_node(42);
+// to print sorted order
+void inorder(struct Node* root) {
+    if (!root) return;
+    inorder(root->left);
+    printf("%d ", root->val);
+    inorder(root->right);
+}
 
-//     if (node == NULL) {
-//         printf("Allocation failed\n");
-//         return 1;
-//     }
+int main() {
+    struct Node* root = NULL;
 
-//     printf("Value: %d\n", node->val);
-//     printf("Left: %p\n", (void*)node->left);
-//     printf("Right: %p\n", (void*)node->right);
+    int values[] = {5, 3, 7, 2, 4, 6, 8};
+    int n = 7;
+    for (int i = 0; i < n; i++) {
+        root = insert(root, values[i]); // make_node will be called internally for the first insert
+    }
 
-//     return 0;
-// }
+    printf("Inorder traversal (should be sorted hopefully):\n");
+    inorder(root);
+    printf("\n");
+    
+    printf("Testing get():\n");
 
-// struct Node* insert(struct Node*, int);
-// int getAtMost(int, struct Node*);
+    int test_vals[] = {5, 2, 8, 10};
+    for (int i = 0; i < 4; i++) {
+        struct Node* res = get(root, test_vals[i]);
 
-// int main() {
-//     struct Node* root = NULL;
+        if (res)
+            printf("Found %d at %p\n", res->val, (void*)res);
+        else
+            printf("%d not found\n", test_vals[i]);
+    }
 
-//     root = insert(root, 5);
-//     root = insert(root, 3);
-//     root = insert(root, 7);
-//     root = insert(root, 6);
+    printf("\n");
 
-//     printf("%d\n", getAtMost(6, root)); // should print 6
-// }
+    // Expected:
+    // Found 5
+    // Found 2
+    // Found 8
+    // 10 not found
+
+
+    printf("Testing getAtMost():\n");
+
+    int queries[] = {1, 2, 5, 6, 9};
+    for (int i = 0; i < 5; i++) {
+        int ans = getAtMost(queries[i], root);
+        printf("getAtMost(%d) = %d\n", queries[i], ans);
+    }
+
+    printf("\n");
+
+    // Expected:
+    // getAtMost(1) = -1
+    // getAtMost(2) = 2
+    // getAtMost(5) = 5
+    // getAtMost(6) = 6
+    // getAtMost(9) = 8
+
+    return 0;
+}
