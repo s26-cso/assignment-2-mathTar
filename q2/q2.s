@@ -1,8 +1,10 @@
 .section .rodata
 fmt_out:
 .string "%d "
+fmt_last:
+.string "%d"
 newline:
-.string "\n "
+.string "\n"
 
 .section .text
 .extern malloc
@@ -155,9 +157,21 @@ printLoop:
     add t2, s4, t1 #the res array s4
     lw a1, 0(t2)
 
+    #we have to check if last element: i == n-1?
+    addi t3, s2, -1
+    beq t0, t3, printLast
+
+    #normal case
     la a0, fmt_out
     call printf
 
+    j nextIter
+
+printLast:
+    la a0, fmt_last
+    call printf
+
+nextIter:
     addi t0, t0, 1
     j printLoop
 
